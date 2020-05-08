@@ -4,9 +4,7 @@
 	function getBg() {
 		fetch("https://diabetessimapi.herokuapp.com/")
 			.then(d => d.json())
-		//   .then(d => (rand = d));
 			.then(function (d) {
-				console.log(d)
 				return bg = d
 			});
 	}
@@ -15,7 +13,6 @@
 		getBg()
 		renderChart()
 	}
-
 
 	// Copied from internet!
 	import { onMount } from "svelte";

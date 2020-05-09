@@ -18,8 +18,8 @@
 	}
 
 	function renderChart() {
-		var ctx = canvasEl.getContext("2d");
-		var chart = new Chart(ctx, {
+		let ctx = canvasEl.getContext("2d");
+		let chart = new Chart(ctx, {
 			type: "line",
 			data: {
 				labels: [...Array(bg.length).keys()],

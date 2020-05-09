@@ -2,7 +2,11 @@
 	import { onMount } from "svelte";
 	import Chart from "chart.js";
 
-	let bg
+	let bg, canvasEl
+
+	onMount(async () => {
+		getBg()
+	})
 
 	function getBg() {
 		fetch("https://diabetessimapi.herokuapp.com/")
@@ -13,17 +17,8 @@
 			});
 	}
 
-	function reload() {
-		bg = false
-		getBg()
-	}
-
-	onMount(async () => {
-		getBg()
-	})
-
 	function renderChart() {
-		var ctx = document.getElementById("myChart").getContext("2d");
+		var ctx = canvasEl.getContext("2d");
 		var chart = new Chart(ctx, {
 			type: "line",
 			data: {
@@ -40,7 +35,11 @@
 			},
 			options: {}
 		});
+	}
 
+	function reload() {
+		bg = false
+		getBg()
 	}
 </script>
 
@@ -56,4 +55,4 @@
 
 {/if}
 
-<canvas id="myChart"></canvas> 
+<canvas bind:this={canvasEl}></canvas> 

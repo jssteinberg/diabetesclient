@@ -1,23 +1,27 @@
 <script>
-	let bg = -1;
+	import { onMount } from "svelte";
+	import Chart from "chart.js";
+
+	let bg
 
 	function getBg() {
 		fetch("https://diabetessimapi.herokuapp.com/")
-			.then(d => d.json())
-			.then(function (d) {
-				return bg = d
+			.then(res => res.json())
+			.then(function (res) {
+				bg = res
+				renderChart()
 			});
 	}
 
-	function loadShow() {
+	function reload() {
+		bg = false
 		getBg()
-		renderChart()
 	}
 
-	// Copied from internet!
-	import { onMount } from "svelte";
-	import Chart from "chart.js";
-	onMount(async () => {});
+	onMount(async () => {
+		getBg()
+	})
+
 	function renderChart() {
 		var ctx = document.getElementById("myChart").getContext("2d");
 		var chart = new Chart(ctx, {
@@ -38,19 +42,18 @@
 		});
 
 	}
-
-// End copied from internet!
 </script>
 
-<!-- <h1>Your number is {bg}!</h1> -->
-<!-- <button on:click={getBg}>Get a random number</button> -->
+<h1>Standard BG values</h1>
 
-<h1>Press button to load standard BG values</h1>
-<button on:click={loadShow}>Load</button> 
+{#if bg}
+
+	<button on:click={reload}>Reload standard BG values from API</button> 
+
+{:else}
+
+	<p>Loading data from API ...</p>
+
+{/if}
+
 <canvas id="myChart"></canvas> 
-
-<style>
-:global(body){
-	max-width: 1200px;
-}
-</style>

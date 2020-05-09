@@ -1,23 +1,13 @@
 <script>
-	import { onMount } from "svelte";
-	import Chart from "chart.js";
+	import { onMount } from "svelte"
+	import Chart from "chart.js"
+	import getBg from "../getBg.js"
 
-	let bg, canvasEl
+	let bgLoaded = false
+	let canvasEl
 
-	onMount(async () => {
-		getBg()
-	})
-
-	function getBg() {
-		fetch("https://diabetessimapi.herokuapp.com/")
-			.then(res => res.json())
-			.then(function (res) {
-				bg = res
-				renderChart()
-			});
-	}
-
-	function renderChart() {
+	// This function is sent as callback -- runs after data is loaded from API
+	function renderChart (bg) {
 		let ctx = canvasEl.getContext("2d");
 		let chart = new Chart(ctx, {
 			type: "line",
@@ -35,24 +25,29 @@
 			},
 			options: {}
 		});
+
+		bgLoaded = true
 	}
 
-	function reload() {
-		bg = false
-		getBg()
+	function load() {
+		bgLoaded = false
+
+		// Calls method from imported file to load data from API. Sends callback `renderChart` function
+		getBg(renderChart)
 	}
+
+	// onMount tells the component has been mounted to the DOM -- it's safe to manipulated DOM
+	onMount(async () => {
+		load()
+	})
 </script>
 
 <h1>Standard BG values</h1>
 
-{#if bg}
-
-	<button on:click={reload}>Reload standard BG values from API</button> 
-
+{#if bgLoaded}
+	<button on:click={load}>Reload standard BG values from API</button> 
 {:else}
-
 	<p>Loading data from API ...</p>
-
 {/if}
 
 <canvas bind:this={canvasEl}></canvas> 

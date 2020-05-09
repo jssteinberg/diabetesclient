@@ -4,15 +4,12 @@
  * @callback: function to perform after data loads
  */
 export default function getBg(callback) {
-	console.log('getBg()')
-	fetch('https://diabetessimapi.herokuapp.com/')
-		.then(d => d.json())
-		.then(function (d) {
-			console.log(d)
+	fetch("https://diabetessimapi.herokuapp.com/")
+		.then(res => res.json())
+		.then(function (res) {
 
 			// Run callback if provided
-			if (typeof callback !== 'undefined') callback()
-
-			return d
-		})
+			if (typeof callback !== 'undefined')
+				callback(res)
+		});
 }

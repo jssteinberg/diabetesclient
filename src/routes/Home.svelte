@@ -4,7 +4,7 @@
 	import getBg from "../getBg.js"
 
 	let canvasEl
-	let bg
+	let bg = Array(100)
 	
 	// Meal variables
 	let meal_1 = '40'
@@ -36,9 +36,11 @@
 	}
 
 	function load(meal_1=30, meal_2=30, meal_3=30, meal_4=30) {
+	// function load() {
 		// Calls method from imported file to load data from API. Sends callback `renderChart` function
 		// getBg(renderChart)
 		var fetch_string = "http://127.0.0.1:4500/diabetes?m1=" + meal_1 + "&m2=" + meal_2 + "&m3=" + meal_3 + "&m4=" + meal_4
+		console.log(fetch_string)
 		fetch(fetch_string)
 			.then(res => res.json())
 			.then(function (res) {
@@ -57,13 +59,12 @@
 
 <h1>Standard BG values</h1>
 
-<input value={meal_1}>
-<input value={meal_2}>
-<input value={meal_3}>
-<input value={meal_4}>
+<input bind:value={meal_1}>
+<input bind:value={meal_2}>
+<input bind:value={meal_3}>
+<input bind:value={meal_4}>
 
-
-<button on:click={load}>Show BG curve</button> 
+<button on:click={() => load(meal_1, meal_2, meal_3, meal_4)}>Show BG curve</button> 
 
 
 <canvas bind:this={canvasEl}></canvas> 

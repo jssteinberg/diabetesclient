@@ -3,7 +3,6 @@
 	import Chart from "chart.js"
 	import getBg from "../getBg.js"
 
-	let bgLoaded = false
 	let canvasEl
 	let bg
 	
@@ -36,10 +35,11 @@
 
 	}
 
-	function load() {
+	function load(meal_1=30, meal_2=30, meal_3=30, meal_4=30) {
 		// Calls method from imported file to load data from API. Sends callback `renderChart` function
 		// getBg(renderChart)
-		fetch("http://127.0.0.1:4500/diabetes?m1=30&m2=30&m3=30&m4=30")
+		var fetch_string = "http://127.0.0.1:4500/diabetes?m1=" + meal_1 + "&m2=" + meal_2 + "&m3=" + meal_3 + "&m4=" + meal_4
+		fetch(fetch_string)
 			.then(res => res.json())
 			.then(function (res) {
 
@@ -62,16 +62,8 @@
 <input value={meal_3}>
 <input value={meal_4}>
 
-<p>{meal_1}</p>
-<p>{meal_2}</p>
-<p>{meal_3}</p>
-<p>{meal_4}</p>
 
-<!-- {#if bgLoaded} -->
-	<button on:click={load}>Reload standard BG values from API</button> 
-<!-- {:else} -->
-	<!-- <p>Loading data from API ...</p> -->
-<!-- {/if} -->
+<button on:click={load}>Show BG curve</button> 
 
 
 <canvas bind:this={canvasEl}></canvas> 

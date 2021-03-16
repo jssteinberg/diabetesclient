@@ -57,9 +57,9 @@
 	})
 </script>
 
-<h1>Standard BG values</h1>
+<h1>Hovorka T1D simulator</h1>
 
-<p>For some reason you have to press twice on the button to load and plot.</p>
+<p>You have to press twice on the button to update the plot.</p>
 
 <input bind:value={meal_1}>
 <input bind:value={meal_2}>

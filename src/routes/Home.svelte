@@ -39,7 +39,8 @@
 	// function load() {
 		// Calls method from imported file to load data from API. Sends callback `renderChart` function
 		// getBg(renderChart)
-		var fetch_string = "http://127.0.0.1:4500/diabetes?m1=" + meal_1 + "&m2=" + meal_2 + "&m3=" + meal_3 + "&m4=" + meal_4
+		// var fetch_string = "http://127.0.0.1:4500/diabetes?m1=" + meal_1 + "&m2=" + meal_2 + "&m3=" + meal_3 + "&m4=" + meal_4
+		var fetch_string = "http://diabetessimapi.herokuapp.com/diabetes?m1=" + meal_1 + "&m2=" + meal_2 + "&m3=" + meal_3 + "&m4=" + meal_4
 		console.log(fetch_string)
 		fetch(fetch_string)
 			.then(res => res.json())
